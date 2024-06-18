@@ -1,0 +1,9 @@
+.friendsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  color: midnightblue;
+  font-size: 20px;
+  margin-bottom: 50px;
+}
