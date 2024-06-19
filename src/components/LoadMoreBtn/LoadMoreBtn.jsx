@@ -1,4 +1,4 @@
-const LoadMoreButton = ({ handleLoadMore }) => {
+const LoadMoreBtn = ({ handleLoadMore }) => {
   return (
     <button
       onClick={handleLoadMore}
@@ -9,4 +9,4 @@ const LoadMoreButton = ({ handleLoadMore }) => {
   );
 };
 
-export default LoadMoreButton;
+export default LoadMoreBtn;

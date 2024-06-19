@@ -4,11 +4,11 @@ import { Toaster } from "react-hot-toast";
 import { fetchUnsplashPhotos } from "./service/photosUnsplashAPI.js";
 
 import SearchBar from "./components/SearchBar/SearchBar";
-import Gallery from "./components/Gallery/Gallery";
-import LoadMoreButton from "./components/LoadMoreButton/LoadMoreButton";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
-import Message from "./components/Message/Message";
-import Loader from "./components/Loader/Loader.jsx";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import Loader from "./components/Loader/Loader";
 
 const App = () => {
   const [key, setKey] = useState("");
@@ -45,6 +45,7 @@ const App = () => {
   useEffect(() => {
     if (!key) return;
     const getImages = async () => {
+      setError(false);
       setLoader(true);
       try {
         const { results, total, total_pages } = await fetchUnsplashPhotos(
@@ -72,24 +73,23 @@ const App = () => {
       <div>
         <Toaster />
       </div>
+
       <SearchBar handleSearch={handleSearch} />
-      {images.length ? (
-        <Gallery images={images} handleImageClick={handleImageClick} />
-      ) : loader ? (
-        <Message message="Please wait..." />
-      ) : error ? (
-        <Message
-          message={`Error was encountered: ${error}. Please reload the page or contact support.`}
-        ></Message>
-      ) : (
-        <Message message="Start search to display images" />
+
+      {!!images.length && (
+        <ImageGallery images={images} handleImageClick={handleImageClick} />
       )}
-      {loadMore && <LoadMoreButton handleLoadMore={handleLoadMore} />}
+
+      {error && <ErrorMessage error={error}></ErrorMessage>}
+
+      {loadMore && <LoadMoreBtn handleLoadMore={handleLoadMore} />}
+
       <ImageModal
         isOpen={!!modalData}
         image={modalData}
         closeModal={closeModal}
       />
+
       {loader && <Loader />}
     </div>
   );

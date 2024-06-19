@@ -1,6 +1,6 @@
-import Image from "../Image/Image";
+import ImageCard from "../ImageCard/ImageCard";
 
-const Gallery = ({ images, handleImageClick }) => {
+const ImageGallery = ({ images, handleImageClick }) => {
   return (
     <ul className="flex flex-wrap gap-10 p-10 mx-auto max-w-7xl items-center justify-center drop-shadow-lg">
       {images.map((image) => {
@@ -9,9 +9,7 @@ const Gallery = ({ images, handleImageClick }) => {
             className="block overflow-hidden transition-transform hover:scale-110"
             key={image.id}
           >
-            <button onClick={() => handleImageClick(image)}>
-              <Image image={image} />
-            </button>
+            <ImageCard image={image} handleImageClick={handleImageClick} />
           </li>
         );
       })}
@@ -19,4 +17,4 @@ const Gallery = ({ images, handleImageClick }) => {
   );
 };
 
-export default Gallery;
+export default ImageGallery;

@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 
 export const noImagesToast = (key) =>
-  toast.error(`No images found by word ${key}.`, {
+  toast.error(`No images found by word "${key}".`, {
     position: "bottom-center",
     duration: 4000,
     style: {
