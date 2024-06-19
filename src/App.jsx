@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { noImagesToast, oopsToast, sameKeyToast } from "./service/toasts.js";
 import { Toaster } from "react-hot-toast";
-import { fetchPhotos } from "./service/photosAPI";
+import { fetchUnsplashPhotos } from "./service/photosUnsplashAPI.js";
+
 import SearchBar from "./components/SearchBar/SearchBar";
 import Gallery from "./components/Gallery/Gallery";
 import LoadMoreButton from "./components/LoadMoreButton/LoadMoreButton";
 import ImageModal from "./components/ImageModal/ImageModal";
 import Message from "./components/Message/Message";
 import Loader from "./components/Loader/Loader.jsx";
-import { fetchUnsplashPhotos } from "./service/photosUnsplashAPI.js";
 
 const App = () => {
   const [key, setKey] = useState("");
@@ -66,31 +66,6 @@ const App = () => {
     };
     getImages();
   }, [key, page]);
-
-  // useEffect(() => {
-  //   if (!key) return;
-  //   const getImages = async () => {
-  //     setLoader(true);
-  //     try {
-  //       const { photos, total_results, per_page } = await fetchPhotos(
-  //         key,
-  //         page
-  //       );
-  //       if (!total_results) {
-  //         noImagesToast(key);
-  //         return;
-  //       }
-  //       setImages((prev) => [...prev, ...photos]);
-  //       setLoadMore(page < Math.ceil(total_results / per_page));
-  //     } catch (error) {
-  //       oopsToast();
-  //       setError(error.message);
-  //     } finally {
-  //       setLoader(false);
-  //     }
-  //   };
-  //   getImages();
-  // }, [key, page]);
 
   return (
     <div className="pb-10" id="appElement">

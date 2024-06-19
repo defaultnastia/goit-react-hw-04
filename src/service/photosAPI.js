@@ -17,3 +17,30 @@ export const fetchPhotos = async (query, page) => {
 
   return result.data;
 };
+
+// just in case something need to be fixed, this is an alternative API without requests limit
+
+// useEffect(() => {
+//   if (!key) return;
+//   const getImages = async () => {
+//     setLoader(true);
+//     try {
+//       const { photos, total_results, per_page } = await fetchPhotos(
+//         key,
+//         page
+//       );
+//       if (!total_results) {
+//         noImagesToast(key);
+//         return;
+//       }
+//       setImages((prev) => [...prev, ...photos]);
+//       setLoadMore(page < Math.ceil(total_results / per_page));
+//     } catch (error) {
+//       oopsToast();
+//       setError(error.message);
+//     } finally {
+//       setLoader(false);
+//     }
+//   };
+//   getImages();
+// }, [key, page]);
