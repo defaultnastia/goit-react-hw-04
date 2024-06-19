@@ -12,7 +12,7 @@ export const noImagesToast = (key) =>
   });
 
 export const oopsToast = () =>
-  toast.error("Oops! Something went wrong.", {
+  toast.error(`Oops! Something went wrong.`, {
     position: "bottom-center",
     duration: 3000,
     style: {

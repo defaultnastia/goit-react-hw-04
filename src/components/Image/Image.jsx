@@ -3,8 +3,8 @@ const Image = ({ image }) => {
     <>
       <img
         className="object-cover h-64 w-64"
-        src={image.src.medium}
-        alt={image.alt}
+        src={image.urls.regular}
+        alt={image.description}
       />
     </>
   );

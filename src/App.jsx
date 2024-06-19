@@ -1,13 +1,14 @@
+import { useEffect, useState } from "react";
+import { noImagesToast, oopsToast, sameKeyToast } from "./service/toasts.js";
+import { Toaster } from "react-hot-toast";
+import { fetchPhotos } from "./service/photosAPI";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Gallery from "./components/Gallery/Gallery";
-import { useEffect, useState } from "react";
-import { fetchPhotos } from "./service/photosAPI";
 import LoadMoreButton from "./components/LoadMoreButton/LoadMoreButton";
 import ImageModal from "./components/ImageModal/ImageModal";
 import Message from "./components/Message/Message";
-import { Toaster } from "react-hot-toast";
-import { noImagesToast, oopsToast, sameKeyToast } from "./service/toasts.js";
 import Loader from "./components/Loader/Loader.jsx";
+import { fetchUnsplashPhotos } from "./service/photosUnsplashAPI.js";
 
 const App = () => {
   const [key, setKey] = useState("");
@@ -16,18 +17,13 @@ const App = () => {
   const [loader, setLoader] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [page, setPage] = useState(1);
-  const [error, setError] = useState(false);
-
-  const closeModal = () => {
-    setModalData(null);
-  };
+  const [error, setError] = useState(null);
 
   const handleSearch = (keyword) => {
     if (keyword === key) {
       sameKeyToast(key);
       return;
     }
-
     setKey(keyword);
     setImages([]);
     setPage(1);
@@ -42,31 +38,59 @@ const App = () => {
     setModalData(image);
   };
 
+  const closeModal = () => {
+    setModalData(null);
+  };
+
   useEffect(() => {
     if (!key) return;
     const getImages = async () => {
       setLoader(true);
       try {
-        const { photos, total_results, per_page } = await fetchPhotos(
+        const { results, total, total_pages } = await fetchUnsplashPhotos(
           key,
           page
         );
-        if (!total_results) {
+        if (!total) {
           noImagesToast(key);
           return;
         }
-        setImages((prev) => [...prev, ...photos]);
-        setLoadMore(page < Math.ceil(total_results / per_page));
+        setImages((prev) => [...prev, ...results]);
+        setLoadMore(page < total_pages);
       } catch (error) {
-        console.log(error.message);
-        setError(error.message);
         oopsToast();
+        setError(error.message);
       } finally {
         setLoader(false);
       }
     };
     getImages();
   }, [key, page]);
+
+  // useEffect(() => {
+  //   if (!key) return;
+  //   const getImages = async () => {
+  //     setLoader(true);
+  //     try {
+  //       const { photos, total_results, per_page } = await fetchPhotos(
+  //         key,
+  //         page
+  //       );
+  //       if (!total_results) {
+  //         noImagesToast(key);
+  //         return;
+  //       }
+  //       setImages((prev) => [...prev, ...photos]);
+  //       setLoadMore(page < Math.ceil(total_results / per_page));
+  //     } catch (error) {
+  //       oopsToast();
+  //       setError(error.message);
+  //     } finally {
+  //       setLoader(false);
+  //     }
+  //   };
+  //   getImages();
+  // }, [key, page]);
 
   return (
     <div className="pb-10" id="appElement">
@@ -78,6 +102,10 @@ const App = () => {
         <Gallery images={images} handleImageClick={handleImageClick} />
       ) : loader ? (
         <Message message="Please wait..." />
+      ) : error ? (
+        <Message
+          message={`Error was encountered: ${error}. Please reload the page or contact support.`}
+        ></Message>
       ) : (
         <Message message="Start search to display images" />
       )}

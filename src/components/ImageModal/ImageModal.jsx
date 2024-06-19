@@ -26,15 +26,23 @@ const ImageModal = ({ image, isOpen, closeModal }) => {
       </button>
       {image && (
         <>
-          <img className="mx-auto" src={image.src.medium} alt="image.alt" />
+          <img
+            className="mx-auto max-w-lg"
+            src={image.urls.full}
+            alt={image.description}
+          />
           <div className="flex justify-between items-center pt-4">
             <p className="text-lg font-semibold text-center min-h-16 content-center border border-zinc-800 px-3 rounded	max-w-80">
-              {image.alt}
+              {image.description || "No description"}
             </p>
-            <div className="min-h-16 border border-zinc-800 px-3 rounded	">
+            <a
+              className="min-h-16 border border-zinc-800 px-3 rounded"
+              href={image.user.links.html}
+              target="_blanc"
+            >
               <p className="text-center text-2xl">📸</p>
-              <p className="text-center">{image.photographer}</p>
-            </div>
+              <p className="text-center">{image.user.name}</p>
+            </a>
           </div>
         </>
       )}
