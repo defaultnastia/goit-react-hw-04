@@ -1,6 +1,21 @@
 :root {
   font-family: Arial, sans-serif;
 }
+
+input:hover,
+input:active,
+input:focus {
+  outline: none;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.ReactModal__Overlay--before-close {
+  pointer-events: none;
+}
