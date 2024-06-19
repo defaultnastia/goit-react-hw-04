@@ -28,7 +28,7 @@ const ImageModal = ({ image, isOpen, closeModal }) => {
         <>
           <img
             className="mx-auto max-w-lg"
-            src={image.urls.full}
+            src={image.urls.regular}
             alt={image.description}
           />
           <div className="flex justify-between items-center pt-4">
