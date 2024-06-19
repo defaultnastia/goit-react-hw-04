@@ -68,7 +68,7 @@ const App = () => {
   }, [key, page]);
 
   return (
-    <div className="pb-10" id="appElement">
+    <div className="pb-10">
       <div>
         <Toaster />
       </div>

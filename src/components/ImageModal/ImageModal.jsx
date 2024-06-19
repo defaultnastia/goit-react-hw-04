@@ -12,7 +12,7 @@ const ImageModal = ({ image, isOpen, closeModal }) => {
     },
   };
 
-  Modal.setAppElement("#appElement");
+  Modal.setAppElement("#root");
 
   return (
     <Modal
